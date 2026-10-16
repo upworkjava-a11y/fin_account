@@ -1,0 +1,26 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_payroll }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.hr_payroll }}</h1>
+<p class="page-sub">{{ t.mod_hr }}</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Xodim</th><th>Oylik</th><th>Ustama</th><th>Bonus</th>
+        <th>Qo‘shimcha</th><th>Jarima</th><th>Jami</th><th>To‘lanadigan</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in employees %}
+        {% if e.status == 'Aktiv' %}
+        <tr>
+          <td>{{ e.fio }}</td><td>{{ e.salary }}</td><td>0</td><td>0</td>
+          <td>0</td><td>0</td><td>{{ e.salary }}</td><td>{{ e.salary }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

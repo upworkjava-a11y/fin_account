@@ -1,0 +1,11 @@
+<header class="public-nav">
+  <a class="brand" href="{% url 'home' %}">
+    <span class="brand-mark"></span>
+    <span>{{ t.brand }}</span>
+  </a>
+  <div class="public-nav-right">
+    {% include 'partials/lang_switch.html' %}
+    <a class="btn btn-primary btn-sm" href="{% url 'register' %}">{{ t.register }}</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'guest_enter' %}">Tashrif buyurish</a>
+  </div>
+</header>

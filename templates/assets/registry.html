@@ -1,0 +1,35 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.asset_registry }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.asset_registry }}</h1>
+<p class="page-sub">{{ t.mod_assets }}</p>
+<nav class="tabs">
+  <a href="?" class="{% if not active_group %}active{% endif %}">Barchasi</a>
+  {% for key, label in groups %}
+  <a href="?group={{ key }}" class="{% if active_group == key %}active{% endif %}">{{ label }}</a>
+  {% endfor %}
+</nav>
+<div class="toolbar"><button class="btn btn-primary btn-sm">➕ {{ t.add_new }}</button></div>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Inventar №</th><th>Nomi</th><th>Turi</th><th>Xarid</th>
+        <th>Boshlang‘ich</th><th>Eskirish</th><th>Qoldiq</th>
+        <th>Joyi</th><th>Mas'ul</th><th>Holati</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in assets %}
+      <tr>
+        <td>{{ a.inv }}</td><td>{{ a.name }}{% if a.source == 'my.soliq.uz' %} <span class="badge">soliq</span>{% endif %}</td>
+        <td>{{ a.type_label }}</td><td>{{ a.buy_date }}</td>
+        <td>{{ a.initial }}</td><td>{{ a.rate }}</td><td>{{ a.residual }}</td>
+        <td>{{ a.place }}</td><td>{{ a.responsible }}</td>
+        <td><span class="badge ok">{{ a.status }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

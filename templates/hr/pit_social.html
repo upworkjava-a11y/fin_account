@@ -1,0 +1,21 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_pit }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.hr_pit }}</h1>
+<p class="page-sub">JShDS · Ijtimoiy soliq · INPS uchun bazaviy ma’lumotlar</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead><tr><th>Xodim</th><th>JShShIR</th><th>Oylik baza</th><th>JShDS</th><th>Ijtimoiy soliq</th><th>Holati</th></tr></thead>
+    <tbody>
+      {% for e in employees %}
+      <tr>
+        <td>{{ e.fio }}</td><td>{{ e.pinfl }}</td>
+        <td>{% if e.status == 'Aktiv' %}{{ e.salary }}{% else %}0{% endif %}</td>
+        <td>—</td><td>—</td><td>{{ e.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="muted-note">{{ t.placeholder }}</p>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.bank_archive }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.bank_archive }}</h1>
+<p class="page-sub">{{ t.mod_bank }}</p>
+
+<form class="filters" method="get">
+  <div class="form-group"><label>{{ t.year }}</label><select name="year"><option>2026</option><option>2025</option></select></div>
+  <div class="form-group"><label>Hisob raqami</label><input type="text" name="account"></div>
+  <div class="form-group"><label>Bank</label><input type="text" name="bank"></div>
+  <div class="form-group"><label>Davr</label><input type="text" name="period" placeholder="01.01.2026 – 31.03.2026"></div>
+  <button type="submit" class="btn btn-primary btn-sm">{{ t.refresh }}</button>
+</form>
+
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Hisob raqami turi</th>
+        <th>Hisob raqami</th>
+        <th>Bank</th>
+        <th>Davr</th>
+        <th>Yuklangan sana</th>
+        <th>Fayl nomi</th>
+        <th>Operatsiyalar</th>
+        <th>Yuklash</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.type }}</td>
+        <td>{{ r.account }}</td>
+        <td>{{ r.bank }}</td>
+        <td>{{ r.period }}</td>
+        <td>{{ r.uploaded }}</td>
+        <td>{{ r.file }}</td>
+        <td><strong>{{ r.ops }}</strong></td>
+        <td><button class="btn btn-outline btn-sm">📥</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

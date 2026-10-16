@@ -1,0 +1,34 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.org_docs }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.org_docs }}</h1>
+<p class="page-sub">{{ t.mod_org }}</p>
+
+<div class="toolbar">
+  <button type="button" class="btn btn-primary btn-sm">➕ {{ t.upload }}</button>
+</div>
+
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>Hujjat</th><th>Fayl</th><th>Yuklangan</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for d in documents %}
+      <tr>
+        <td>{{ d.name }}</td>
+        <td>{{ d.file }}</td>
+        <td>{{ d.uploaded }}</td>
+        <td><button class="btn btn-outline btn-sm">{{ t.download }}</button></td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td>Boshqa hujjatlar</td>
+        <td colspan="3" class="muted">{{ t.placeholder }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

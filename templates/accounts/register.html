@@ -1,0 +1,84 @@
+{% extends 'base_public.html' %}
+
+{% block title %}{{ t.reg_title }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>{{ t.reg_title }}</h1>
+
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="msg">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" id="registerForm" novalidate>
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="stir">{{ t.reg_stir }}</label>
+        <input type="text" id="stir" name="stir" maxlength="9" placeholder="123456789" required>
+      </div>
+      <div class="form-group">
+        <label for="company">{{ t.reg_company }}</label>
+        <input type="text" id="company" name="company" value="Demo Korxona MChJ" disabled>
+        {# TODO: auto-fill from STIR / my.soliq.uz #}
+      </div>
+      <div class="form-group">
+        <label for="password">{{ t.reg_password }}</label>
+        <input type="password" id="password" name="password" required>
+        <ul class="pw-rules" id="pwRules">
+          <li data-rule="len">{{ t.pw_len }}</li>
+          <li data-rule="upper">{{ t.pw_upper }}</li>
+          <li data-rule="lower">{{ t.pw_lower }}</li>
+          <li data-rule="digit">{{ t.pw_digit }}</li>
+          <li data-rule="special">{{ t.pw_special }}</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="password2">{{ t.reg_password2 }}</label>
+        <input type="password" id="password2" name="password2" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">{{ t.reg_phone }}</label>
+        <input type="tel" id="phone" name="phone" placeholder="+998 __ ___ __ __" required>
+      </div>
+      <div class="form-group">
+        <label class="checkbox-row">
+          <input type="checkbox" name="oferta" required>
+          <span>{{ t.reg_oferta }}</span>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%">{{ t.reg_submit }}</button>
+    </form>
+    <p style="margin-top:1rem;color:var(--fa-muted);font-size:0.9rem">{{ t.reg_coming }}</p>
+    <p style="margin-top:0.75rem"><a href="{% url 'home' %}">← {{ t.reg_back }}</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const input = document.getElementById('password');
+    const rules = document.querySelectorAll('#pwRules li');
+    if (!input) return;
+    const checks = {
+      len: (v) => v.length >= 8,
+      upper: (v) => /[A-ZА-ЯЁ]/.test(v),
+      lower: (v) => /[a-zа-яё]/.test(v),
+      digit: (v) => /\d/.test(v),
+      special: (v) => /[^A-Za-zА-Яа-яЁё0-9]/.test(v),
+    };
+    input.addEventListener('input', () => {
+      const v = input.value;
+      rules.forEach((li) => {
+        const rule = li.getAttribute('data-rule');
+        li.classList.toggle('ok', checks[rule](v));
+      });
+    });
+  })();
+</script>
+{% endblock %}

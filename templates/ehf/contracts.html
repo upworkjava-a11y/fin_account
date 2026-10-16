@@ -1,0 +1,22 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.ehf_contracts }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.ehf_contracts }}</h1>
+<nav class="tabs">
+  <a href="?status=active" class="{% if active_status == 'active' %}active{% endif %}">Faol</a>
+  <a href="?status=ended" class="{% if active_status == 'ended' %}active{% endif %}">Tugagan</a>
+  <a href="?status=cancelled" class="{% if active_status == 'cancelled' %}active{% endif %}">Bekor qilingan</a>
+</nav>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead><tr><th>Shartnoma №</th><th>Kontragent</th><th>Holati</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr><td>{{ r.number }}</td><td>{{ r.party }}</td><td>{{ r.status }}</td></tr>
+      {% empty %}
+      <tr><td colspan="3" class="muted">Bo‘sh</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

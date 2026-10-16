@@ -1,0 +1,26 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.recon_cp }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.recon_cp }}</h1>
+<p class="page-sub">EHF + bank aylanmasi asosida avtomatik qarzdorlik</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Kontragent</th><th>STIR</th><th>Shartnoma</th><th>EHF</th>
+        <th>Debitorka</th><th>Kreditorka</th><th>Oxirgi operatsiya</th><th>Holati</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.name }}</td><td>{{ r.stir }}</td><td>{{ r.contract }}</td><td>{{ r.ehf }}</td>
+        <td>{{ r.debit }}</td><td>{{ r.credit }}</td><td>{{ r.last_op }}</td>
+        <td><span class="badge">{{ r.status }}</span></td>
+        <td><button class="btn btn-outline btn-sm">{{ t.download }}</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

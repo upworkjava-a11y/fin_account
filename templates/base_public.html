@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ t.brand }}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/finaccount.css' %}">
+</head>
+<body>
+  {% include 'partials/navbar_public.html' %}
+  {% block content %}{% endblock %}
+  {% include 'partials/footer.html' %}
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

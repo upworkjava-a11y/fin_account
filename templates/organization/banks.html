@@ -1,0 +1,24 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.org_banks }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.org_banks }}</h1>
+<p class="page-sub">{{ t.mod_org }}</p>
+
+<div class="toolbar">
+  <button type="button" class="btn btn-primary btn-sm">➕ {{ t.add_new }}</button>
+</div>
+
+<div class="account-grid">
+  {% for acc in accounts %}
+  <article class="account-card">
+    <h3>{{ acc.type }}</h3>
+    <div class="account-meta">
+      <div>{{ acc.number }}</div>
+      <div>MFO: {{ acc.mfo }} · {{ acc.bank }}</div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

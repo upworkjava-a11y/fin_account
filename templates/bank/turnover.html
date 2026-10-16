@@ -1,0 +1,85 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.bank_turnover }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.bank_turnover }}</h1>
+<p class="page-sub">{{ t.mod_bank }}</p>
+
+<div class="account-grid">
+  {% for acc in accounts %}
+    <article class="account-card">
+      <h3>🏦 {{ acc.title }}</h3>
+      <div class="account-meta">
+        <div>{{ acc.number }} · MFO: {{ acc.mfo }}</div>
+        <div>{{ acc.bank }}</div>
+        <div><strong>{{ t.balance }}:</strong> {{ acc.balance }}</div>
+        <div><strong>{{ t.last_period }}:</strong> {{ acc.last_period }}</div>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm js-open-upload" data-last-end="{{ acc.last_end }}">➕ {{ t.add_new }}</button>
+    </article>
+  {% endfor %}
+</div>
+
+<div class="modal" id="uploadModal" aria-hidden="true">
+  <div class="modal-card">
+    <h3 style="margin-top:0">{{ t.add_new }}</h3>
+    <div id="gapError" class="empty-hint" style="display:none;margin-bottom:0.75rem">{{ t.gap_error }}</div>
+    <form id="uploadForm">
+      <div class="form-group">
+        <label>{{ t.period_start }}</label>
+        <input type="date" name="start" id="periodStart" required>
+      </div>
+      <div class="form-group">
+        <label>{{ t.period_end }}</label>
+        <input type="date" name="end" id="periodEnd" required>
+      </div>
+      <div class="form-group">
+        <label>{{ t.file_upload }}</label>
+        <input type="file" name="file" accept=".xlsx,.xls,.csv">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="closeUpload">{{ t.cancel }}</button>
+        <button type="submit" class="btn btn-primary btn-sm">{{ t.upload }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const modal = document.getElementById('uploadModal');
+    const closeBtn = document.getElementById('closeUpload');
+    const form = document.getElementById('uploadForm');
+    const gapError = document.getElementById('gapError');
+    let lastEnd = null;
+    document.querySelectorAll('.js-open-upload').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        lastEnd = btn.getAttribute('data-last-end');
+        gapError.style.display = 'none';
+        modal.classList.add('open');
+      });
+    });
+    closeBtn?.addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const start = document.getElementById('periodStart').value;
+      if (lastEnd && start) {
+        const nextDay = new Date(lastEnd);
+        nextDay.setDate(nextDay.getDate() + 1);
+        const expected = nextDay.toISOString().slice(0, 10);
+        if (start !== expected) {
+          gapError.style.display = 'block';
+          return;
+        }
+      }
+      gapError.style.display = 'none';
+      alert('Demo: fayl arxivga o‘tkaziladi va avto-provodka uchun tayyorlanadi.');
+      modal.classList.remove('open');
+    });
+  })();
+</script>
+{% endblock %}

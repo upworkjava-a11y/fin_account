@@ -1,0 +1,12 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.recon_tax }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.recon_tax }}</h1>
+<p class="page-sub">{{ t.mod_payments }} · my.soliq.uz</p>
+<div class="stat-grid">
+  <div class="stat-card"><span>Soliq qarzdorligi</span><strong>{{ debt }} so‘m</strong></div>
+  <div class="stat-card"><span>Ortiqcha to‘lovlar</span><strong>{{ overpay }} so‘m</strong></div>
+  <div class="stat-card"><span>Hisob-kitoblar holati</span><strong>{{ status }}</strong></div>
+</div>
+<p class="muted-note">{{ t.placeholder }}</p>
+{% endblock %}

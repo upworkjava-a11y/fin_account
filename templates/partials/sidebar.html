@@ -1,0 +1,27 @@
+<aside class="app-sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-mark"></span>
+    <span>{{ t.brand }}</span>
+  </div>
+  <nav class="sidebar-nav">
+    {% for item in sidebar_modules %}
+      <div class="nav-item {% if item.active %}active open{% endif %}">
+        <a href="{{ item.url }}">
+          <span class="nav-ico">{{ item.icon }}</span>
+          <span>{{ item.label }}</span>
+        </a>
+        {% if item.children and item.active %}
+          <div class="nav-children">
+            {% for child in item.children %}
+              <a href="{{ child.url }}" class="{% if child.active %}active{% endif %}">{{ child.label }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </nav>
+  <div class="sidebar-help">
+    <strong>Yordam kerakmi?</strong>
+    <span>+998 71 200 00 01</span>
+  </div>
+</aside>

@@ -1,0 +1,7 @@
+{% if module_tabs %}
+<nav class="module-tabs">
+  {% for tab in module_tabs %}
+    <a href="{{ tab.url }}" class="{% if tab.active %}active{% endif %}">{{ tab.label }}</a>
+  {% endfor %}
+</nav>
+{% endif %}

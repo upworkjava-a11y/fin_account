@@ -1,0 +1,32 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.ehf_in }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.ehf_in }}</h1>
+<p class="page-sub">{{ t.mod_ehf }}</p>
+<nav class="tabs">
+  {% for key, label in tabs %}
+  <a href="?tab={{ key }}" class="{% if active_tab == key %}active{% endif %}">{{ label }}</a>
+  {% endfor %}
+</nav>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Holati</th><th>Turi</th><th>Kontragent</th><th>STIR</th>
+        <th>Hujjat №</th><th>Shartnoma</th><th>QQSsiz</th><th>QQS</th><th>Jami</th><th>Sana</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.status }}</td><td>{{ r.type }}</td><td>{{ r.counterparty }}</td><td>{{ r.stir }}</td>
+        <td>{{ r.number }}</td><td>{{ r.contract }}</td>
+        <td>{{ r.without_vat }}</td><td>{{ r.vat }}</td><td>{{ r.with_vat }}</td><td>{{ r.created }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="10" class="muted">Bo‘sh</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

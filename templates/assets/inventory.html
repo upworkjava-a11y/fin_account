@@ -1,0 +1,26 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.asset_inv }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.asset_inv }}</h1>
+<p class="page-sub">{{ t.mod_assets }}</p>
+<div class="toolbar"><button class="btn btn-primary btn-sm">➕ Inventarizatsiya</button></div>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Inventar №</th><th>Nomi</th><th>Sana</th><th>Joyi</th>
+        <th>Mas'ul</th><th>Faktik</th><th>Yetishmovchilik</th><th>Ortiqchalik</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in assets %}
+      <tr>
+        <td>{{ a.inv }}</td><td>{{ a.name }}</td><td>01.04.2026</td>
+        <td>{{ a.place }}</td><td>{{ a.responsible }}</td>
+        <td>Bor</td><td>0</td><td>0</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

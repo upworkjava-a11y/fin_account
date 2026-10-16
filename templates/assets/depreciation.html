@@ -1,0 +1,25 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.asset_depr }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.asset_depr }}</h1>
+<p class="page-sub">{{ t.mod_assets }}</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Inventar №</th><th>Nomi</th><th>Boshlang‘ich</th><th>Norma</th>
+        <th>Oylik</th><th>Yillik</th><th>Jamg‘arilgan</th><th>Qoldiq</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in assets %}
+      <tr>
+        <td>{{ a.inv }}</td><td>{{ a.name }}</td><td>{{ a.initial }}</td><td>{{ a.rate }}</td>
+        <td>—</td><td>—</td><td>—</td><td>{{ a.residual }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="muted-note">{{ t.placeholder }}</p>
+{% endblock %}

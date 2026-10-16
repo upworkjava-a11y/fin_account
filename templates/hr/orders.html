@@ -1,0 +1,22 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_orders }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.hr_orders }}</h1>
+<p class="page-sub">my.mehnat.uz · PDF · QR</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>Buyruq №</th><th>Sana</th><th>Xodim</th><th>Turi</th><th>Holati</th><th>PDF</th></tr>
+    </thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td>{{ o.number }}</td><td>{{ o.date }}</td><td>{{ o.employee }}</td>
+        <td>{{ o.type }}</td><td><span class="badge ok">{{ o.status }}</span></td>
+        <td><button class="btn btn-outline btn-sm">{{ t.download }}</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

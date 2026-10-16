@@ -1,0 +1,21 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.pay_create }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.pay_create }}</h1>
+<p class="page-sub">{{ t.mod_payments }}</p>
+<div class="panel-card" style="max-width:560px">
+  <div class="form-group"><label>Soliq turi</label>
+    <select><option>QQS</option><option>JShDS</option><option>Ijtimoiy soliq</option></select>
+  </div>
+  <div class="form-group"><label>Soliq kodi</label><input type="text" value="101010"></div>
+  <div class="form-group"><label>To‘lov summasi</label><input type="text" placeholder="0"></div>
+  <div class="form-group"><label>To‘lov sanasi</label><input type="date"></div>
+  <div class="form-group"><label>Izoh</label><input type="text"></div>
+  <div class="inline-row">
+    <button class="btn btn-outline btn-sm">{{ t.create }}</button>
+    <button class="btn btn-primary btn-sm">{{ t.send }}</button>
+    <button class="btn btn-outline btn-sm">{{ t.confirm }}</button>
+  </div>
+  <p class="muted-note">{{ t.placeholder }}</p>
+</div>
+{% endblock %}

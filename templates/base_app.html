@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ t.brand }}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/finaccount.css' %}">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    {% include 'partials/sidebar.html' %}
+    {% include 'partials/navbar_app.html' %}
+    <main class="app-main">
+      <div class="page-panel">
+        {% include 'partials/module_tabs.html' %}
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+  <script>
+    (function () {
+      const shell = document.getElementById('appShell');
+      const toggle = document.getElementById('menuToggle');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const profileWrap = document.getElementById('profileWrap');
+      const profileBtn = document.getElementById('profileBtn');
+
+      if (toggle) {
+        toggle.addEventListener('click', () => shell.classList.toggle('sidebar-open'));
+      }
+      if (backdrop) {
+        backdrop.addEventListener('click', () => shell.classList.remove('sidebar-open'));
+      }
+      if (profileBtn && profileWrap) {
+        profileBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          profileWrap.classList.toggle('open');
+        });
+        document.addEventListener('click', () => profileWrap.classList.remove('open'));
+      }
+    })();
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

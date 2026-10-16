@@ -1,0 +1,36 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.org_tg }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.org_tg }}</h1>
+<p class="page-sub">{{ t.mod_org }}</p>
+
+<div class="panel-card">
+  <div id="phoneList">
+    {% for phone in phones %}
+    <div class="form-group phone-row">
+      <label>Telefon</label>
+      <div class="inline-row">
+        <input type="tel" value="{{ phone }}">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button type="button" class="btn btn-outline btn-sm" id="addPhone">+ Telefon</button>
+  <button type="button" class="btn btn-primary btn-sm" style="margin-left:0.4rem">{{ t.save }}</button>
+  <p class="muted-note">{{ t.placeholder }}</p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.getElementById('addPhone')?.addEventListener('click', () => {
+    const list = document.getElementById('phoneList');
+    const div = document.createElement('div');
+    div.className = 'form-group phone-row';
+    div.innerHTML = '<label>Telefon</label><div class="inline-row"><input type="tel" placeholder="+998 __ ___ __ __"></div>';
+    list.appendChild(div);
+  });
+</script>
+{% endblock %}

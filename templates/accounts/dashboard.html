@@ -1,0 +1,32 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.dashboard }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.dashboard }}</h1>
+<p class="page-sub">Korxona faoliyatining umumiy ko‘rsatkichlari</p>
+
+<div class="metric-grid">
+  <div class="metric-card"><span>Sof foyda</span><strong>125.4M</strong><em>+12.5%</em></div>
+  <div class="metric-card"><span>Daromadlar</span><strong>853.2M</strong><em>+8.7%</em></div>
+  <div class="metric-card"><span>Xarajatlar</span><strong>727.7M</strong><em>+6.3%</em></div>
+  <div class="metric-card"><span>Soliq majburiyatlari</span><strong>98.4M</strong><em style="color:var(--fa-danger)">-3.2%</em></div>
+  <div class="metric-card"><span>Bank qoldig‘i</span><strong>312.5M</strong><em>+9.1%</em></div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-box">
+    <h3>Daromad va xarajatlar dinamikasi</h3>
+    <div class="fake-chart"></div>
+  </div>
+  <div class="chart-box">
+    <h3>Xarajatlar tarkibi</h3>
+    <div class="fake-chart"></div>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-box"><h3>Bank aylanmalari</h3><div class="fake-chart"></div></div>
+  <div class="chart-box"><h3>Debitor / kreditor</h3><div class="fake-chart"></div></div>
+</div>
+{% endblock %}

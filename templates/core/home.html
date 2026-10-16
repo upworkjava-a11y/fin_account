@@ -1,0 +1,46 @@
+{% extends 'base_public.html' %}
+
+{% block title %}{{ t.brand }} — {{ t.tagline }}{% endblock %}
+
+{% block content %}
+<section class="hero-split">
+  <div class="hero-copy">
+    <h1>{{ t.tagline }}</h1>
+    <p>{{ t.hero_sub }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'register' %}">
+        {{ t.register }}
+        <span class="btn-arrow">→</span>
+      </a>
+      <a class="btn btn-outline" href="{% url 'guest_enter' %}">👤 {{ t.guest }}</a>
+    </div>
+  </div>
+  <div class="hero-visual" role="img" aria-label="FinAccount office"></div>
+</section>
+
+<section class="services">
+  <h2>Taklif qilinadigan xizmatlarimiz</h2>
+  <div class="service-grid service-grid-8">
+    <article class="service-item"><div class="service-icon">🏢</div><h3>{{ t.mod_org }}</h3><p>{{ t.mod_org_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">📑</div><h3>{{ t.mod_tax }}</h3><p>{{ t.mod_tax_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">🏦</div><h3>{{ t.mod_bank }}</h3><p>{{ t.mod_bank_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">💳</div><h3>{{ t.mod_payments }}</h3><p>{{ t.mod_payments_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">🏗️</div><h3>{{ t.mod_assets }}</h3><p>{{ t.mod_assets_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">📦</div><h3>{{ t.mod_tmz }}</h3><p>{{ t.mod_tmz_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">📄</div><h3>{{ t.mod_ehf }}</h3><p>{{ t.mod_ehf_desc }}</p></article>
+    <article class="service-item"><div class="service-icon">👥</div><h3>{{ t.mod_hr }}</h3><p>{{ t.mod_hr_desc }}</p></article>
+  </div>
+</section>
+
+<section class="why">
+  <h2>Nima uchun FinAccount?</h2>
+  <div class="why-strip">
+    <div class="why-item"><span>①</span> Barcha jarayonlar bitta tizimda</div>
+    <div class="why-item"><span>②</span> Soliq va HR integratsiya</div>
+    <div class="why-item"><span>③</span> AI yordamchi</div>
+    <div class="why-item"><span>④</span> Bulut texnologiyasi</div>
+    <div class="why-item"><span>⑤</span> Xavfsiz saqlash</div>
+    <div class="why-item"><span>⑥</span> Tezkor hisobotlar</div>
+  </div>
+</section>
+{% endblock %}

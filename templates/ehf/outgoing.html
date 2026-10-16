@@ -1,0 +1,18 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.ehf_out }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.ehf_out }}</h1>
+<p class="page-sub">EHF · Akt · Shartnoma</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>Holati</th><th>Turi</th><th>Kontragent</th><th>Hujjat №</th><th>Jami</th><th>Sana</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr><td>{{ r.status }}</td><td>{{ r.type }}</td><td>{{ r.counterparty }}</td><td>{{ r.number }}</td><td>{{ r.with_vat }}</td><td>{{ r.created }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

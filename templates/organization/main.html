@@ -1,0 +1,34 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ t.org_main }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{{ t.mod_org }}</h1>
+<p class="page-sub">{{ t.org_main }} · <span class="badge ok">✓ my.soliq.uz dan yuklangan</span></p>
+
+<div class="panel-card">
+  <div class="kv-grid">
+    <div class="kv"><span>STIR</span><strong>{{ org.stir }}</strong><em>readonly</em></div>
+    <div class="kv"><span>OKED</span><strong>{{ org.oked }}</strong><em>readonly</em></div>
+    <div class="kv"><span>SOOGU</span><strong>{{ org.soogu }}</strong><em>readonly</em></div>
+    <div class="kv"><span>Korxona nomi</span><strong>{{ org.name }}</strong><em>readonly</em></div>
+    <div class="kv"><span>Soliq to‘lovchisi turi</span><strong>{{ org.tax_type }}</strong><em>readonly</em></div>
+  </div>
+</div>
+
+<div class="panel-card" style="margin-top:1rem">
+  <h3 style="margin-top:0">Rahbar / Bosh buxgalter</h3>
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Rahbar</label>
+      <input type="text" value="{{ org.director }}">
+    </div>
+    <div class="form-group">
+      <label>Bosh buxgalter</label>
+      <input type="text" value="{{ org.accountant }}">
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary btn-sm">{{ t.save }}</button>
+  <p class="muted-note">{{ t.placeholder }}</p>
+</div>
+{% endblock %}

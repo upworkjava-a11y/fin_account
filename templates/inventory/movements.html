@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.tmz_moves }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.tmz_moves }}</h1>
+<p class="page-sub">Kirim · Chiqim · Ko‘chirish · Inventarizatsiya</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead><tr><th>Sana</th><th>Operatsiya</th><th>Hujjat</th><th>Mahsulot</th><th>Miqdor</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr><td>{{ r.date }}</td><td>{{ r.type }}</td><td>{{ r.doc }}</td><td>{{ r.product }}</td><td>{{ r.qty }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

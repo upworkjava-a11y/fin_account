@@ -1,0 +1,23 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.ehf_drafts }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.ehf_drafts }}</h1>
+<p class="page-sub">Faktura · Akt · Shartnoma loyihalari</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead><tr><th>Turi</th><th>Kontragent</th><th>№</th><th>Holati</th><th></th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.type }}</td><td>{{ r.counterparty }}</td><td>{{ r.number }}</td><td>{{ r.status }}</td>
+        <td>
+          <button class="btn btn-outline btn-sm">Ochish</button>
+          <button class="btn btn-outline btn-sm">{{ t.edit }}</button>
+          <button class="btn btn-primary btn-sm">{{ t.send }}</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

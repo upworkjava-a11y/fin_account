@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.ehf_archive }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.ehf_archive }}</h1>
+<p class="page-sub">Eskirgan va yakunlangan hujjatlar</p>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead><tr><th>Turi</th><th>Kontragent</th><th>№</th><th>Sana</th><th>Holati</th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr><td>{{ r.type }}</td><td>{{ r.counterparty }}</td><td>{{ r.number }}</td><td>{{ r.created }}</td><td>{{ r.status }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

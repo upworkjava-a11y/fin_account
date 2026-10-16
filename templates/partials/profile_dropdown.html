@@ -1,0 +1,26 @@
+<div class="profile-wrap" id="profileWrap">
+  <button type="button" class="profile-btn" id="profileBtn">
+    <span class="avatar">{{ profile.company|slice:":1"|upper }}</span>
+    <span class="profile-meta">
+      <strong>{{ t.profile }}</strong>
+      <small>STIR: 305556789</small>
+    </span>
+  </button>
+  <div class="profile-dropdown">
+    <h4>{{ profile.company }}</h4>
+    <div class="profile-row"><span>{{ t.reg_date }}</span><span>{{ profile.reg_date }}</span></div>
+    <div class="profile-row"><span>{{ t.tariff }}</span><span>{{ profile.tariff }} <span class="badge ok">Faol</span></span></div>
+    <div class="profile-row"><span>{{ t.tariff_until }}</span><span>{{ profile.tariff_until }}</span></div>
+    <div class="profile-row"><span>{{ t.payment_due }}</span><span>{{ profile.payment_due }}</span></div>
+    <div class="profile-row"><span>{{ t.payment_phone }}</span><span>{{ profile.payment_phone }}</span></div>
+    <div class="profile-row">
+      <span>{{ t.telegram }}</span>
+      <span><a href="{{ profile.telegram }}" target="_blank" rel="noopener">Telegram</a></span>
+    </div>
+    {% if is_guest %}
+      <div style="margin-top:0.85rem">
+        <a class="btn btn-outline btn-sm" href="{% url 'guest_exit' %}" style="color:var(--fa-danger)">{{ t.logout_guest }}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.tmz_registry }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.tmz_registry }}</h1>
+<p class="page-sub">{{ t.mod_tmz }}</p>
+<div class="toolbar">
+  <button class="btn btn-primary btn-sm">➕ {{ t.add_new }}</button>
+  <button class="btn btn-outline btn-sm">Excel {{ t.upload }}</button>
+  <button class="btn btn-outline btn-sm">EHF dan olish</button>
+</div>
+<div class="panel-card" style="padding:0;overflow:auto">
+  <table class="data-table">
+    <thead>
+      <tr><th>Kod</th><th>Nomi</th><th>Birlik</th><th>Ombor</th><th>Qoldiq</th><th>O‘rtacha tannarx</th><th>Umumiy</th></tr>
+    </thead>
+    <tbody>
+      {% for i in items %}
+      <tr>
+        <td>{{ i.code }}</td><td>{{ i.name }}</td><td>{{ i.unit }}</td>
+        <td>{{ i.warehouse }}</td><td>{{ i.qty }}</td><td>{{ i.avg_cost }}</td><td>{{ i.total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

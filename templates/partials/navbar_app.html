@@ -1,0 +1,14 @@
+<header class="app-topbar">
+  <div class="topbar-left">
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="{{ t.nav_menu }}">☰</button>
+    <strong>{{ profile.company }}</strong>
+  </div>
+  <div class="topbar-right">
+    {% include 'partials/lang_switch.html' %}
+    <button type="button" class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+    {% if is_guest %}
+      <span class="guest-badge">{{ t.guest_badge }}</span>
+    {% endif %}
+    {% include 'partials/profile_dropdown.html' %}
+  </div>
+</header>
