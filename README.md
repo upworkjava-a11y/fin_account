@@ -14,6 +14,10 @@ python manage.py runserver
 
 Open http://127.0.0.1:8000/
 
+## PythonAnywhere (`finaccount.pythonanywhere.com`)
+
+Use `config.settings_pa` on the server. Copy `.env.example` to `.env` and set a real `SECRET_KEY`. Then migrate, `collectstatic`, point the Web app WSGI file at this project, map `/static/` to `staticfiles`, and Reload.
+
 ## Modules in sidebar
 
 1. **Tashkilot ma’lumotlari** — asosiy ma’lumotlar, hujjatlar, bank hisoblari, Telegram
