@@ -2,6 +2,8 @@ __pycache__/
 *.py[cod]
 *.sqlite3
 db.sqlite3
+telegram_bot/storage/**
+!telegram_bot/storage/.gitkeep
 .env
 .venv/
 venv/

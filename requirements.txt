@@ -1,2 +1,4 @@
 Django>=5.0,<6
 whitenoise>=6.6,<7
+asn1crypto>=1.5
+cryptography>=42,<47

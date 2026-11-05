@@ -313,6 +313,25 @@ button, input, select { font: inherit; }
   box-shadow: var(--fa-shadow);
 }
 .auth-card h1 { margin: 0 0 1rem; color: var(--fa-navy); font-size: 1.5rem; }
+.eri-status { color: var(--fa-navy); font-weight: 600; margin: 1rem 0; }
+.key-list { display: grid; gap: 0.6rem; margin-top: 0.5rem; }
+.key-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--fa-border);
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.8rem 0.95rem;
+  cursor: pointer;
+}
+.key-btn:hover { border-color: var(--fa-primary); }
+.key-btn span { color: var(--fa-muted); font-size: 0.85rem; }
+.eri-links { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; }
+.form-error { color: #cf1322; font-weight: 600; }
 .form-group { margin-bottom: 1rem; }
 .form-group label {
   display: block;

@@ -3,7 +3,7 @@
     <span class="avatar">{{ profile.company|slice:":1"|upper }}</span>
     <span class="profile-meta">
       <strong>{{ t.profile }}</strong>
-      <small>STIR: 305556789</small>
+      <small>STIR: {{ profile.stir }}</small>
     </span>
   </button>
   <div class="profile-dropdown">
@@ -17,7 +17,7 @@
       <span>{{ t.telegram }}</span>
       <span><a href="{{ profile.telegram }}" target="_blank" rel="noopener">Telegram</a></span>
     </div>
-    {% if is_guest %}
+    {% if is_guest or is_eri %}
       <div style="margin-top:0.85rem">
         <a class="btn btn-outline btn-sm" href="{% url 'guest_exit' %}" style="color:var(--fa-danger)">{{ t.logout_guest }}</a>
       </div>

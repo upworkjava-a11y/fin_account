@@ -29,9 +29,21 @@ Use `config.settings_pa` on the server. Copy `.env.example` to `.env` and set a 
 7. **EHF** — kiruvchi/chiquvchi/loyiha/shartnomalar/arxiv
 8. **HR** — xodimlar, ish haqi, JShDS, buyruqlar arxivi
 
+## Telegram bot
+
+Same modules as the website, in `telegram_bot/`. Token stays in `.env` as `TELEGRAM_BOT_TOKEN` (see `.env.example`).
+
+```bash
+.\.venv\Scripts\activate
+pip install -r requirements-bot.txt
+python -m telegram_bot
+```
+
+Create the bot in BotFather, paste the token into `.env`, then open the bot in Telegram and send `/start`.
+
 ## Notes
 
-- Landing: Register / Guest, UZ/RU/EN
+- Landing: ERI key sign-in, Register / Guest, UZ/RU/EN
 - App shell: blue sidebar + topbar profile + watermark
 - Demo data is in views (no my.soliq.uz / my.mehnat.uz live APIs yet)
 - Guest can browse UI; send/report integrations are deferred

@@ -133,3 +133,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Session keys used for guest mode / profile placeholders
 SESSION_GUEST_KEY = 'is_guest'
 SESSION_PROFILE_KEY = 'profile'
+SESSION_ERI_KEY = 'eri_authenticated'
+
+# E-IMZO. Localhost API keys are the public keys from the E-IMZO integration guide.
+# A production domain needs its own key from the E-IMZO operator.
+EIMZO_WS_URL = 'wss://127.0.0.1:64443/service/cryptapi'
+EIMZO_SERVER_URL = os.environ.get('EIMZO_SERVER_URL', '').strip()
+EIMZO_CHALLENGE_TTL = 120
+EIMZO_API_KEYS = [
+    'localhost',
+    '96D0C1491615C82B9A54D9989779DF825B690748224C2B04F500F370D51827CE2644D8D4A82C18184D73AB8530BB8ED537269603F61DB0D03D2104ABF789970B',
+    '127.0.0.1',
+    'A7BCFA5D490B351BE0754130DF03A068F855DB4333D43921125B9CF2670EF6A40370C646B90401955E1F7BC9CDBF59CE0B2C5467D820BE189C845D0B79CFC96F',
+]

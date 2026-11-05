@@ -1,0 +1,45 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}{{ t.eri_title }} — {{ t.brand }}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>{{ t.eri_title }}</h1>
+    <p class="muted">{{ t.eri_help }}</p>
+    <div id="eriStatus" class="eri-status">{{ t.eri_wait }}</div>
+    <div id="eriKeys" class="key-list" hidden></div>
+    <p id="eriError" class="form-error" hidden></p>
+    <p class="eri-links">
+      <a href="https://e-imzo.uz" target="_blank" rel="noopener">{{ t.eri_install }}</a>
+      <a href="{% url 'home' %}">← {{ t.eri_back }}</a>
+    </p>
+  </div>
+</div>
+{{ eimzo_api_keys|json_script:"eri-api-keys" }}
+{{ eimzo_ws|json_script:"eri-ws" }}
+<script id="eri-copy" type="application/json">
+{
+  "pick": "{{ t.eri_pick|escapejs }}",
+  "wait": "{{ t.eri_wait|escapejs }}",
+  "missing": "{{ t.eri_missing|escapejs }}",
+  "errors": {
+    "challenge_expired": "{{ t.eri_err_challenge_expired|escapejs }}",
+    "challenge_mismatch": "{{ t.eri_err_challenge_mismatch|escapejs }}",
+    "bad_pkcs7": "{{ t.eri_err_bad_pkcs7|escapejs }}",
+    "cert_expired": "{{ t.eri_err_cert_expired|escapejs }}",
+    "gost_needs_server": "{{ t.eri_err_gost_needs_server|escapejs }}",
+    "server_rejected": "{{ t.eri_err_server_rejected|escapejs }}",
+    "server_unreachable": "{{ t.eri_err_server_unreachable|escapejs }}",
+    "signature_invalid": "{{ t.eri_err_signature_invalid|escapejs }}",
+    "identity_missing": "{{ t.eri_err_identity_missing|escapejs }}"
+  }
+}
+</script>
+{% csrf_token %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/eri.js' %}"></script>
+{% endblock %}

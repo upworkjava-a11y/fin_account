@@ -8,10 +8,11 @@
     <h1>{{ t.tagline }}</h1>
     <p>{{ t.hero_sub }}</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="{% url 'register' %}">
-        {{ t.register }}
+      <a class="btn btn-primary" href="{% url 'eri_login' %}">
+        {{ t.eri_login }}
         <span class="btn-arrow">→</span>
       </a>
+      <a class="btn btn-outline" href="{% url 'register' %}">{{ t.register }}</a>
       <a class="btn btn-outline" href="{% url 'guest_enter' %}">👤 {{ t.guest }}</a>
     </div>
   </div>

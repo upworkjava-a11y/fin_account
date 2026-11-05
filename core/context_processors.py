@@ -37,6 +37,7 @@ def site_context(request):
     t = get_labels(lang)
 
     is_guest = bool(request.session.get(settings.SESSION_GUEST_KEY))
+    is_eri = bool(request.session.get(settings.SESSION_ERI_KEY))
     profile = request.session.get(settings.SESSION_PROFILE_KEY) or {
         'reg_date': '08.10.2026',
         'tariff': 'Standart',
@@ -45,6 +46,7 @@ def site_context(request):
         'payment_phone': '+998 71 200 00 01',
         'telegram': 'https://t.me/finaccount_support',
         'company': "OOO \"Fin Trade\"",
+        'stir': '305556789',
     }
 
     sidebar = [
@@ -138,6 +140,7 @@ def site_context(request):
         'current_lang': lang,
         'languages': settings.LANGUAGES,
         'is_guest': is_guest,
+        'is_eri': is_eri,
         'profile': profile,
         'sidebar_modules': sidebar,
         'module_tabs': module_tabs,
