@@ -873,6 +873,227 @@ button, input, select { font: inherit; }
   .why-strip { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* HR module */
+.hr-mode-tabs {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0 0 1.1rem;
+  flex-wrap: wrap;
+}
+.hr-mode-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--fa-border);
+  background: #fff;
+  color: var(--fa-navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+.hr-mode-tab.active {
+  background: var(--fa-primary);
+  border-color: var(--fa-primary);
+  color: #fff;
+}
+.hr-search { margin-bottom: 1rem; }
+.hr-section-title {
+  margin: 0 0 0.85rem;
+  color: var(--fa-navy);
+  font-size: 1.05rem;
+}
+.hr-search-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  align-items: end;
+}
+.hr-split {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.4fr);
+  gap: 1rem;
+}
+.hr-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.hr-panel-head h3 { margin: 0; color: var(--fa-navy); }
+.hr-depts tr.is-selected { background: #eaf2ff; }
+.hr-select-link { color: var(--fa-primary); text-decoration: none; }
+.badge.vacant {
+  display: inline-block;
+  margin-left: 0.35rem;
+  border: 1px solid #52c41a;
+  color: #389e0d;
+  background: #f6ffed;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.btn-hire {
+  background: #ff7a45;
+  border-color: #ff7a45;
+  color: #fff;
+}
+.btn-hire:hover { filter: brightness(0.95); color: #fff; }
+.hr-row-actions {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+.hr-row-actions form { display: inline; }
+.btn-danger-soft { color: #cf1322; }
+.hr-back {
+  display: inline-block;
+  margin: 0 0 0.85rem;
+  color: var(--fa-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.hr-form-card { max-width: 860px; }
+.hr-form-card h2 { margin-top: 0; color: var(--fa-navy); }
+.hr-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+.form-errors {
+  color: #cf1322;
+  background: #fff1f0;
+  border: 1px solid #ffa39e;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+}
+.hint { color: var(--fa-muted); font-size: 0.85rem; }
+.stavka-row { display: flex; align-items: center; gap: 0.4rem; }
+.stavka-row select { width: auto; min-width: 72px; }
+.form-row-salary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+.input-suffix {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.input-suffix input { flex: 1; }
+.hr-check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  max-width: 280px;
+  font-size: 0.9rem;
+  margin-top: 1.6rem;
+}
+.hr-radio-row, .hr-mode-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.hr-radio, .hr-mode-card {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  border: 1px solid var(--fa-border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  cursor: pointer;
+}
+.hr-mode-card:has(input:checked),
+.hr-radio:has(input:checked) {
+  border-color: var(--fa-primary);
+  background: #eaf2ff;
+}
+.hr-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  color: var(--fa-muted);
+  margin-bottom: 1rem;
+}
+.hr-subcard {
+  border: 1px solid var(--fa-border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+  background: #fafcff;
+}
+.hr-subcard h3 { margin: 0 0 0.75rem; font-size: 1rem; color: var(--fa-navy); }
+.end-date-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+.hr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 39, 68, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 120;
+  padding: 1rem;
+}
+.hr-modal {
+  width: min(560px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--fa-shadow);
+}
+.hr-modal h2 { margin-top: 0; color: var(--fa-navy); }
+.hr-form-card.is-dimmed { filter: grayscale(0.2); opacity: 0.55; pointer-events: none; }
+.hr-info-box {
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  color: #0958d9;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+.hr-eform-list { display: grid; gap: 0.55rem; }
+.hr-eform-row {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  border: 1px solid var(--fa-border);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  background: #fff;
+}
+.hr-eform-num { font-weight: 700; color: var(--fa-navy); }
+.flash {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: #e6f4ff;
+  border: 1px solid #91caff;
+  color: #0958d9;
+}
+.flash.success { background: #f6ffed; border-color: #b7eb8f; color: #389e0d; }
+.flash.error { background: #fff1f0; border-color: #ffa39e; color: #cf1322; }
+
+@media (max-width: 960px) {
+  .hr-split,
+  .hr-search-grid,
+  .hr-radio-row,
+  .hr-mode-cards,
+  .form-row-salary,
+  .end-date-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 960px) {
   .service-grid,
   .service-grid-8,

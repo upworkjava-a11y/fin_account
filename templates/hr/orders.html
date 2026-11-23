@@ -6,15 +6,17 @@
 <div class="panel-card" style="padding:0;overflow:auto">
   <table class="data-table">
     <thead>
-      <tr><th>Buyruq №</th><th>Sana</th><th>Xodim</th><th>Turi</th><th>Holati</th><th>PDF</th></tr>
+      <tr><th>Buyruq №</th><th>Sana</th><th>{{ t.hr_employee }}</th><th>Turi</th><th>Holati</th><th>PDF</th></tr>
     </thead>
     <tbody>
       {% for o in orders %}
       <tr>
         <td>{{ o.number }}</td><td>{{ o.date }}</td><td>{{ o.employee }}</td>
         <td>{{ o.type }}</td><td><span class="badge ok">{{ o.status }}</span></td>
-        <td><button class="btn btn-outline btn-sm">{{ t.download }}</button></td>
+        <td><button class="btn btn-outline btn-sm" type="button">{{ t.download }}</button></td>
       </tr>
+      {% empty %}
+      <tr><td colspan="6">{{ t.hr_empty }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -1,24 +1,25 @@
 {% extends 'base_app.html' %}
-{% block title %}{{ t.hr_payroll }} — {{ t.brand }}{% endblock %}
+{% block title %}{{ t.hr_payroll_tab }} — {{ t.brand }}{% endblock %}
 {% block content %}
-<h1 class="page-title">{{ t.hr_payroll }}</h1>
-<p class="page-sub">{{ t.mod_hr }}</p>
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
 <div class="panel-card" style="padding:0;overflow:auto">
   <table class="data-table">
     <thead>
       <tr>
-        <th>Xodim</th><th>Oylik</th><th>Ustama</th><th>Bonus</th>
+        <th>{{ t.hr_employee }}</th><th>{{ t.hr_salary }}</th><th>Ustama</th><th>Bonus</th>
         <th>Qo‘shimcha</th><th>Jarima</th><th>Jami</th><th>To‘lanadigan</th>
       </tr>
     </thead>
     <tbody>
       {% for e in employees %}
-        {% if e.status == 'Aktiv' %}
         <tr>
           <td>{{ e.fio }}</td><td>{{ e.salary }}</td><td>0</td><td>0</td>
           <td>0</td><td>0</td><td>{{ e.salary }}</td><td>{{ e.salary }}</td>
         </tr>
-        {% endif %}
+      {% empty %}
+        <tr><td colspan="8">{{ t.hr_empty }}</td></tr>
       {% endfor %}
     </tbody>
   </table>

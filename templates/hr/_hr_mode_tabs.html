@@ -1,0 +1,4 @@
+<div class="hr-mode-tabs">
+  <a class="hr-mode-tab {% if hr_mode == 'cards' %}active{% endif %}" href="{% url 'hr_employees' %}">{{ t.hr_cards }}</a>
+  <a class="hr-mode-tab {% if hr_mode == 'payroll' %}active{% endif %}" href="{% url 'hr_payroll' %}">{{ t.hr_payroll_tab }}</a>
+</div>

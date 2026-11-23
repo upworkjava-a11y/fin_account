@@ -1,0 +1,146 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_cards }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+
+<form class="hr-search panel-card" method="get">
+  <h3 class="hr-section-title">{{ t.hr_search }}</h3>
+  <div class="hr-search-grid">
+    <div class="form-group">
+      <label>{{ t.hr_dept }}</label>
+      <select name="filter_dept">
+        <option value="">{{ t.hr_all }}</option>
+        {% for d in departments %}
+          <option value="{{ d.id }}" {% if filters.filter_dept == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name_uz }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_position }}</label>
+      <select name="position">
+        <option value="">{{ t.hr_all }}</option>
+        {% for p in positions %}
+          <option value="{{ p }}" {% if filters.position == p %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_pinfl }}</label>
+      <input name="pinfl" value="{{ filters.pinfl }}" maxlength="14" placeholder="14 xonali">
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_first_name }}</label>
+      <input name="first_name" value="{{ filters.first_name }}">
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_last_name }}</label>
+      <input name="last_name" value="{{ filters.last_name }}">
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_middle_name }}</label>
+      <input name="middle_name" value="{{ filters.middle_name }}">
+    </div>
+    <div class="form-group hr-search-actions">
+      <label>&nbsp;</label>
+      <button class="btn btn-primary" type="submit">{{ t.hr_search }}</button>
+    </div>
+  </div>
+</form>
+
+<div class="hr-split">
+  <section class="panel-card hr-depts">
+    <div class="hr-panel-head">
+      <h3>{{ t.hr_departments }}</h3>
+      <a class="btn btn-primary btn-sm" href="{% url 'hr_department_new' %}">+ {{ t.hr_dept_create }}</a>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ t.hr_dept_name }}</th>
+          <th>{{ t.hr_emp_count }}</th>
+          <th>{{ t.hr_actions }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in departments %}
+        <tr class="{% if selected_dept and selected_dept.id == d.id %}is-selected{% endif %}">
+          <td>
+            <a class="hr-select-link" href="{% url 'hr_employees' %}?dept={{ d.id }}">◉</a>
+          </td>
+          <td><a href="{% url 'hr_employees' %}?dept={{ d.id }}">{{ d.name_uz }}</a></td>
+          <td>{{ d.employee_count }}</td>
+          <td>
+            {% if not d.is_none %}
+              <a class="btn btn-outline btn-sm" href="{% url 'hr_department_edit' d.id %}">✎</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">{{ t.hr_empty }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel-card hr-seats">
+    <div class="hr-panel-head">
+      <h3>{% if selected_dept %}{{ selected_dept.name_uz }}{% else %}{{ t.hr_departments }}{% endif %}</h3>
+      {% if selected_dept %}
+        <a class="btn btn-primary btn-sm" href="{% url 'hr_workplace_new' %}?dept={{ selected_dept.id }}">+ {{ t.hr_workplace_create }}</a>
+      {% endif %}
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>{{ t.hr_position }}</th>
+          <th>{{ t.hr_pinfl }}</th>
+          <th>{{ t.hr_fio }}</th>
+          <th>{{ t.hr_middle_name }}</th>
+          <th>{{ t.hr_stavka }}</th>
+          <th>{{ t.hr_salary }}</th>
+          <th>{{ t.hr_actions }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for w in workplaces %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            {{ w.title_uz }}
+            {% if w.status == 'vacant' %}
+              <span class="badge vacant">{{ t.hr_vacant }}</span>
+            {% endif %}
+          </td>
+          <td>{% if w.employee %}{{ w.employee.pinfl }}{% else %}—{% endif %}</td>
+          <td>
+            {% if w.status == 'vacant' %}
+              <a class="btn btn-hire btn-sm" href="{% url 'hr_hire' w.id %}">{{ t.hr_hire }}</a>
+            {% elif w.employee %}
+              {{ w.employee.last_name }} {{ w.employee.first_name }}
+            {% endif %}
+          </td>
+          <td>{% if w.employee %}{{ w.employee.middle_name }}{% else %}—{% endif %}</td>
+          <td>{{ w.stavka }}</td>
+          <td>{{ w.salary_display }}</td>
+          <td class="hr-row-actions">
+            <a class="btn btn-outline btn-sm" href="{% url 'hr_workplace_detail' w.id %}" title="{{ t.hr_view }}">👁</a>
+            {% if w.status == 'vacant' %}
+              <form method="post" action="{% url 'hr_workplace_delete' w.id %}" onsubmit="return confirm('{{ t.hr_delete_confirm }}');">
+                {% csrf_token %}
+                <button class="btn btn-outline btn-sm btn-danger-soft" type="submit">🗑</button>
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">{{ t.hr_empty_seats }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

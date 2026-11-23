@@ -115,9 +115,8 @@ def site_context(request):
         _item(
             'hr', t['mod_hr'], 'hr_employees', ['/app/hr/'], '👥',
             [
-                (t['hr_employees'], 'hr_employees'),
-                (t['hr_payroll'], 'hr_payroll'),
-                (t['hr_pit'], 'hr_pit_social'),
+                (t['hr_cards'], 'hr_employees'),
+                (t['hr_payroll_tab'], 'hr_payroll'),
                 (t['hr_orders'], 'hr_orders'),
             ],
         ),

@@ -1,0 +1,109 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_workplace_create }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_employees' %}{% if form.department_id %}?dept={{ form.department_id }}{% endif %}">← {{ t.hr_back }}</a></p>
+
+<div class="panel-card hr-form-card">
+  <h2>{{ t.hr_workplace_create }}</h2>
+  {% if errors %}
+    <ul class="form-errors">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+  <form method="post" id="workplaceForm" novalidate>
+    {% csrf_token %}
+    <div class="form-group">
+      <label>{{ t.hr_dept }} *</label>
+      <select name="department_id" required>
+        <option value="">{{ t.hr_select }}</option>
+        {% for d in departments %}
+          <option value="{{ d.id }}" {% if form.department_id == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name_uz }}</option>
+        {% endfor %}
+      </select>
+      <small class="hint">{{ t.hr_parent_hint }}</small>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_classifier }} *</label>
+      <input name="classifier_title" list="classifierList" value="{{ form.classifier_title }}" required placeholder="Bosh hamshira">
+      <datalist id="classifierList">
+        {% for title in classifier_titles %}<option value="{{ title }}"></option>{% endfor %}
+      </datalist>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_title_uz }} *</label>
+      <input name="title_uz" value="{{ form.title_uz }}" required>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_stavka }} *</label>
+      <div class="stavka-row">
+        <select name="stavka_whole" id="stavkaWhole">
+          <option value="0" {% if form.stavka_whole == '0' %}selected{% endif %}>0</option>
+          <option value="1" {% if form.stavka_whole == '1' %}selected{% endif %}>1</option>
+        </select>
+        <span>,</span>
+        <select name="stavka_frac" id="stavkaFrac"></select>
+      </div>
+      <small class="hint">{{ t.hr_stavka_hint }}</small>
+    </div>
+    <div class="form-row-salary">
+      <div class="form-group" id="salaryGroup">
+        <label>{{ t.hr_oklad }} *</label>
+        <div class="input-suffix">
+          <input name="salary_amount" id="salaryAmount" value="{{ form.salary_amount }}" inputmode="numeric">
+          <span>so‘m</span>
+        </div>
+        <small class="hint">{{ t.hr_oklad_hint }}</small>
+      </div>
+      <label class="hr-check">
+        <input type="checkbox" name="salary_staff" id="salaryStaff" {% if form.salary_staff %}checked{% endif %}>
+        <span>{{ t.hr_staff_table }}</span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_seat_count }}</label>
+      <input type="number" name="count" min="1" value="{{ form.count }}" required>
+    </div>
+    <div class="hr-form-actions">
+      <a class="btn btn-outline" href="{% url 'hr_employees' %}">{{ t.cancel }}</a>
+      <button class="btn btn-primary" type="submit">{{ t.save }}</button>
+    </div>
+  </form>
+</div>
+{{ frac_options_0|json_script:"frac0" }}
+{{ frac_options_1|json_script:"frac1" }}
+<script>
+(function () {
+  const whole = document.getElementById('stavkaWhole');
+  const frac = document.getElementById('stavkaFrac');
+  const staff = document.getElementById('salaryStaff');
+  const amount = document.getElementById('salaryAmount');
+  const options0 = JSON.parse(document.getElementById('frac0').textContent);
+  const options1 = JSON.parse(document.getElementById('frac1').textContent);
+  const initialFrac = "{{ form.stavka_frac }}";
+
+  function fillFrac() {
+    const list = whole.value === '1' ? options1 : options0;
+    frac.innerHTML = '';
+    list.forEach((v) => {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v;
+      if (v === initialFrac) opt.selected = true;
+      frac.appendChild(opt);
+    });
+    if (![...frac.options].some((o) => o.selected) && frac.options.length) {
+      frac.options[0].selected = true;
+    }
+  }
+  function syncSalary() {
+    amount.disabled = staff.checked;
+    if (staff.checked) amount.value = '';
+  }
+  whole.addEventListener('change', fillFrac);
+  staff.addEventListener('change', syncSalary);
+  fillFrac();
+  syncSalary();
+})();
+</script>
+{% endblock %}

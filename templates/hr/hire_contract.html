@@ -1,0 +1,143 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_contract_title }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_hire' workplace.id %}">← {{ t.hr_back }}</a></p>
+
+{% if show_privacy_modal %}
+<div class="hr-modal-backdrop" id="privacyModal">
+  <div class="hr-modal">
+    <h2>{{ t.hr_privacy_title }}</h2>
+    <p>{{ t.hr_privacy_body }}</p>
+    <ul>
+      <li>{{ t.hr_privacy_1 }}</li>
+      <li>{{ t.hr_privacy_2 }}</li>
+      <li>{{ t.hr_privacy_3 }}</li>
+    </ul>
+    <p><a href="#">{{ t.privacy }}</a></p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="accept_privacy">
+      <div class="hr-form-actions">
+        <button class="btn btn-primary" type="submit">{{ t.hr_privacy_ok }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="panel-card hr-form-card {% if show_privacy_modal %}is-dimmed{% endif %}">
+  <h2>{{ t.hr_contract_title }}</h2>
+  <p class="hr-meta">
+    <span>{{ t.hr_position }}: <strong>{{ workplace.title_uz }}</strong></span>
+    <span>{{ t.hr_dept }}: <strong>{{ workplace.department.name_uz }}</strong></span>
+    <span>{{ t.hr_employee }}: <strong>{{ candidate }}</strong></span>
+  </p>
+  {% if errors %}
+    <ul class="form-errors">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+  <form method="post" id="contractForm" novalidate>
+    {% csrf_token %}
+    <section class="hr-subcard">
+      <h3>{{ t.hr_contract_info }}</h3>
+      <div class="form-group">
+        <label>{{ t.hr_contract_number }} *</label>
+        <input name="contract_number" value="{{ form.contract_number }}" required>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_contract_date }} *</label>
+          <input name="contract_date" id="contractDate" value="{{ form.contract_date }}" placeholder="kk.oo.yyyy" required>
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_contract_end }}</label>
+          <div class="end-date-row">
+            <input name="end_date" id="endDate" value="{{ form.end_date }}" placeholder="kk.oo.yyyy" {% if form.indefinite %}disabled{% endif %}>
+            <label class="hr-check">
+              <input type="checkbox" name="indefinite" id="indefinite" {% if form.indefinite %}checked{% endif %}>
+              <span>{{ t.hr_indefinite }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ t.hr_contract_type }} *</label>
+        <select name="contract_type" required>
+          <option value="main" {% if form.contract_type == 'main' %}selected{% endif %}>{{ t.hr_type_main }}</option>
+          <option value="external" {% if form.contract_type == 'external' %}selected{% endif %}>{{ t.hr_type_external }}</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="hr-subcard">
+      <h3>{{ t.hr_work_start }}</h3>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_start_date }} *</label>
+          <input name="start_date" value="{{ form.start_date }}" placeholder="kk.oo.yyyy" required>
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_stavka }} *</label>
+          <input name="stavka" value="{{ form.stavka }}" required>
+        </div>
+      </div>
+    </section>
+
+    <section class="hr-subcard">
+      <h3>{{ t.hr_order_info }}</h3>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_order_number }} *</label>
+          <input name="order_number" value="{{ form.order_number }}" required>
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_order_date }} *</label>
+          <input name="order_date" id="orderDate" value="{{ form.order_date }}" placeholder="kk.oo.yyyy" required>
+          <small class="hint">{{ t.hr_order_date_hint }}</small>
+          <p class="form-error" id="dateError" hidden>{{ t.hr_order_date_error }}</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="hr-form-actions">
+      <a class="btn btn-outline" href="{% url 'hr_employees' %}?dept={{ workplace.department_id }}">{{ t.cancel }}</a>
+      <button class="btn btn-primary" type="submit" id="signBtn" {% if show_privacy_modal %}disabled{% endif %}>{{ t.hr_sign_save }}</button>
+    </div>
+  </form>
+</div>
+<script>
+(function () {
+  const indefinite = document.getElementById('indefinite');
+  const endDate = document.getElementById('endDate');
+  const contractDate = document.getElementById('contractDate');
+  const orderDate = document.getElementById('orderDate');
+  const dateError = document.getElementById('dateError');
+  const form = document.getElementById('contractForm');
+  if (!form) return;
+
+  function parseDMY(v) {
+    const m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec((v || '').trim());
+    if (!m) return null;
+    return new Date(+m[3], +m[2] - 1, +m[1]);
+  }
+  function syncEnd() {
+    endDate.disabled = indefinite.checked;
+    if (indefinite.checked) endDate.value = '';
+  }
+  function checkDates() {
+    const a = parseDMY(contractDate.value);
+    const b = parseDMY(orderDate.value);
+    const ok = !(a && b && b < a);
+    dateError.hidden = ok;
+    return ok;
+  }
+  indefinite.addEventListener('change', syncEnd);
+  contractDate.addEventListener('input', checkDates);
+  orderDate.addEventListener('input', checkDates);
+  form.addEventListener('submit', (e) => { if (!checkDates()) e.preventDefault(); });
+  syncEnd();
+})();
+</script>
+{% endblock %}

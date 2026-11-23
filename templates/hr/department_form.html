@@ -1,0 +1,62 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_dept_create }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_employees' %}">← {{ t.hr_back }}</a></p>
+
+<div class="panel-card hr-form-card">
+  <h2>{% if department %}{{ t.hr_dept_edit }}{% else %}{{ t.hr_dept_create }}{% endif %}</h2>
+  {% if errors %}
+    <ul class="form-errors">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+  <form method="post" id="deptForm" novalidate>
+    {% csrf_token %}
+    <div class="form-group">
+      <label>{{ t.hr_parent_dept }} *</label>
+      <select name="parent_id" required>
+        {% for d in parents %}
+          <option value="{% if d.is_none %}none{% else %}{{ d.id }}{% endif %}"
+            {% if d.is_none and form.parent_id == 'none' %}selected{% elif not d.is_none and form.parent_id == d.id|stringformat:"s" %}selected{% endif %}>
+            {{ d.name_uz }}
+          </option>
+        {% endfor %}
+      </select>
+      <small class="hint">{{ t.hr_parent_hint }}</small>
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_dept_name_uz }} *</label>
+      <input name="name_uz" value="{{ form.name_uz }}" required placeholder="Texnik bo‘lim">
+    </div>
+    <div class="form-group">
+      <label>{{ t.hr_dept_name_ru }}</label>
+      <input name="name_ru" id="nameRu" value="{{ form.name_ru }}" placeholder="Технический отдел">
+      <small class="hint">{{ t.hr_dept_ru_hint }}</small>
+      <p class="form-error" id="ruError" hidden>{{ t.hr_dept_ru_error }}</p>
+    </div>
+    <div class="hr-form-actions">
+      <a class="btn btn-outline" href="{% url 'hr_employees' %}">{{ t.cancel }}</a>
+      <button class="btn btn-primary" type="submit">{{ t.save }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function () {
+  const input = document.getElementById('nameRu');
+  const err = document.getElementById('ruError');
+  const form = document.getElementById('deptForm');
+  if (!input || !form) return;
+  const re = /^[А-Яа-яЁёІіЇїЄєҒғҚқҢңӨөҮүҰұҺһ0-9\s\.,\-\(\)«»\"'/:;]*$/;
+  function check() {
+    const ok = !input.value.trim() || re.test(input.value.trim());
+    err.hidden = ok;
+    return ok;
+  }
+  input.addEventListener('input', check);
+  form.addEventListener('submit', (e) => { if (!check()) e.preventDefault(); });
+})();
+</script>
+{% endblock %}

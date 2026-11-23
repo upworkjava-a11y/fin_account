@@ -1,0 +1,114 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_hire }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_employees' %}?dept={{ workplace.department_id }}">← {{ t.hr_back }}</a></p>
+
+<div class="panel-card hr-form-card">
+  <h2>{{ t.hr_hire }}</h2>
+  <p class="hr-meta">
+    <span>{{ t.hr_position }}: <strong>{{ workplace.title_uz }}</strong></span>
+    <span>{{ t.hr_dept }}: <strong>{{ workplace.department.name_uz }}</strong></span>
+  </p>
+  {% if errors %}
+    <ul class="form-errors">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+  <form method="post" id="hireForm" novalidate>
+    {% csrf_token %}
+    <h3 class="hr-section-title">1. {{ t.hr_citizenship }}</h3>
+    <div class="hr-radio-row">
+      <label class="hr-radio">
+        <input type="radio" name="citizenship" value="uz" {% if form.citizenship == 'uz' %}checked{% endif %}>
+        <span>{{ t.hr_citizen_uz }}</span>
+      </label>
+      <label class="hr-radio">
+        <input type="radio" name="citizenship" value="foreign" {% if form.citizenship == 'foreign' %}checked{% endif %}>
+        <span>{{ t.hr_citizen_foreign }}</span>
+      </label>
+    </div>
+
+    <div id="uzFields">
+      <h3 class="hr-section-title">2. {{ t.hr_personal }}</h3>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_passport_series }} *</label>
+          <input name="passport_series" value="{{ form.passport_series }}" maxlength="2" placeholder="AA">
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_passport_number }} *</label>
+          <input name="passport_number" value="{{ form.passport_number }}" maxlength="7" placeholder="1234567">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ t.hr_pinfl }} *</label>
+        <input name="pinfl" value="{{ form.pinfl }}" maxlength="14" placeholder="14 xonali raqam">
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_last_name }} *</label>
+          <input name="last_name" value="{{ form.last_name }}" placeholder="{{ t.hr_last_name_ph }}">
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_first_name }} *</label>
+          <input name="first_name" value="{{ form.first_name }}" placeholder="{{ t.hr_first_name_ph }}">
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>{{ t.hr_middle_name }}</label>
+          <input name="middle_name" value="{{ form.middle_name }}" placeholder="{{ t.hr_middle_name_ph }}">
+        </div>
+        <div class="form-group">
+          <label>{{ t.hr_birth }} *</label>
+          <input name="birth_date" value="{{ form.birth_date }}" placeholder="kk.oo.yyyy">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ t.hr_gender }} *</label>
+        <select name="gender">
+          <option value="">{{ t.hr_select }}</option>
+          <option value="male" {% if form.gender == 'male' %}selected{% endif %}>{{ t.hr_male }}</option>
+          <option value="female" {% if form.gender == 'female' %}selected{% endif %}>{{ t.hr_female }}</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 class="hr-section-title">3. {{ t.hr_hire_mode }}</h3>
+    <div class="hr-mode-cards">
+      <label class="hr-mode-card">
+        <input type="radio" name="hire_mode" value="paper" {% if form.hire_mode == 'paper' %}checked{% endif %}>
+        <span>{{ t.hr_mode_paper }}</span>
+      </label>
+      <label class="hr-mode-card">
+        <input type="radio" name="hire_mode" value="electronic" {% if form.hire_mode == 'electronic' %}checked{% endif %}>
+        <span>{{ t.hr_mode_electronic }}</span>
+      </label>
+    </div>
+
+    <div class="hr-form-actions">
+      <a class="btn btn-outline" href="{% url 'hr_employees' %}?dept={{ workplace.department_id }}">{{ t.cancel }}</a>
+      <button class="btn btn-primary" type="submit" id="nextBtn">{{ t.hr_next }}</button>
+    </div>
+  </form>
+</div>
+<script>
+(function () {
+  const form = document.getElementById('hireForm');
+  if (!form) return;
+  const uz = form.querySelector('input[name="citizenship"][value="uz"]');
+  const foreign = form.querySelector('input[name="citizenship"][value="foreign"]');
+  const fields = document.getElementById('uzFields');
+  function sync() {
+    fields.style.opacity = foreign.checked ? '0.45' : '1';
+    fields.querySelectorAll('input,select').forEach((el) => {
+      el.disabled = foreign.checked;
+    });
+  }
+  uz.addEventListener('change', sync);
+  foreign.addEventListener('change', sync);
+  sync();
+})();
+</script>
+{% endblock %}

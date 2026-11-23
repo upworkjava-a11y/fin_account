@@ -1,0 +1,31 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ t.hr_eform_title }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ t.mod_hr }}</h1>
+<p class="page-sub">{{ t.hr_module_sub }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_hire' workplace.id %}">← {{ t.hr_back }}</a></p>
+
+<div class="panel-card hr-form-card">
+  <h2>{{ t.hr_eform_title }}</h2>
+  <div class="hr-info-box">{{ t.hr_eform_help }}</div>
+  <p class="hr-meta">
+    <span>{{ t.hr_dept }}: <strong>{{ workplace.department.name_uz }}</strong></span>
+    <span>{{ t.hr_position }}: <strong>{{ workplace.title_uz }}</strong></span>
+    <span>{{ t.hr_candidate }}: <strong>{{ candidate }}</strong></span>
+  </p>
+  <h3 class="hr-section-title">{{ t.hr_eform_pick }}</h3>
+  <div class="hr-eform-list">
+    {% for num, title in forms %}
+    <form method="post" class="hr-eform-row">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="{{ num }}">
+      <span class="hr-eform-num">{{ num }}</span>
+      <span class="hr-eform-title">📄 {{ title }}</span>
+      <button class="btn btn-outline btn-sm" type="submit">{{ t.hr_choose }}</button>
+    </form>
+    {% endfor %}
+  </div>
+  <p class="hint">{{ t.hr_eform_one }}</p>
+</div>
+{% endblock %}

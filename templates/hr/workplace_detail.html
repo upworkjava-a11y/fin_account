@@ -1,0 +1,41 @@
+{% extends 'base_app.html' %}
+{% block title %}{{ workplace.title_uz }} — {{ t.brand }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ workplace.title_uz }}</h1>
+<p class="page-sub">{{ workplace.department.name_uz }}</p>
+{% include 'hr/_hr_mode_tabs.html' %}
+<p><a class="hr-back" href="{% url 'hr_employees' %}?dept={{ workplace.department_id }}">← {{ t.hr_back }}</a></p>
+
+<div class="panel-card">
+  <div class="kv-grid">
+    <div><span class="muted">{{ t.hr_stavka }}</span><strong>{{ workplace.stavka }}</strong></div>
+    <div><span class="muted">{{ t.hr_salary }}</span><strong>{{ workplace.salary_display }}</strong></div>
+    <div><span class="muted">{{ t.hr_vacant }}</span><strong>{% if workplace.status == 'vacant' %}{{ t.hr_vacant }}{% else %}{{ t.hr_occupied }}{% endif %}</strong></div>
+  </div>
+  {% if workplace.employee %}
+  <h3 class="hr-section-title">{{ t.hr_employee }}</h3>
+  <div class="kv-grid">
+    <div><span class="muted">{{ t.hr_fio }}</span><strong>{{ workplace.employee.full_name }}</strong></div>
+    <div><span class="muted">{{ t.hr_pinfl }}</span><strong>{{ workplace.employee.pinfl }}</strong></div>
+    <div><span class="muted">{{ t.hr_birth }}</span><strong>{{ workplace.employee.birth_date|date:"d.m.Y" }}</strong></div>
+    <div><span class="muted">{{ t.hr_hired }}</span><strong>{{ workplace.employee.hired_at|date:"d.m.Y" }}</strong></div>
+  </div>
+  {% endif %}
+  {% if contracts %}
+  <h3 class="hr-section-title">{{ t.hr_contract_title }}</h3>
+  <table class="data-table">
+    <thead><tr><th>№</th><th>{{ t.hr_contract_date }}</th><th>{{ t.hr_hire_mode }}</th><th>{{ t.hr_order_number }}</th></tr></thead>
+    <tbody>
+      {% for c in contracts %}
+      <tr>
+        <td>{{ c.contract_number|default:"—" }}</td>
+        <td>{% if c.contract_date %}{{ c.contract_date|date:"d.m.Y" }}{% else %}—{% endif %}</td>
+        <td>{{ c.get_mode_display }}</td>
+        <td>{{ c.order_number|default:"—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}
